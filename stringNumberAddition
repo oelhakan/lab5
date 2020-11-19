@@ -1,0 +1,168 @@
+package task5;
+
+import static java.lang.System.out;
+
+public class Lab5 {
+    
+    public static boolean isNumeric(String value) {
+        try {
+            Integer.parseInt(value);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+    
+    public static int[] stringToNumberArray(String value) {
+        if (isNumeric(value)) { 
+            char[] valueAsCharArray = value.toCharArray(); 
+            int[] valueAsIntArray = new int[valueAsCharArray.length]; 
+            
+            for (int i = 0; i < valueAsCharArray.length; i++) {
+                valueAsIntArray[i] = valueAsCharArray[i] - '0';
+            }
+            return valueAsIntArray; 
+        }
+        return null;
+  }
+    
+    public static int[] stringToNumberArray(String[] value) {
+        int[] valueAsIntArray = new int[value.length]; 
+        
+        for (int i = 0; i < value.length; i++) {
+            valueAsIntArray[i] = value[i].charAt(0)  - '0' ;
+        }
+        return valueAsIntArray; 
+    }
+    
+    public static int[] integerToNumberArray(int value) {
+        String valueAsString = Integer.toString(value); 
+        return stringToNumberArray(valueAsString); 
+    }
+    
+    public static int[] numberarrays(int[] a1, int[] a2) {
+        int[] a3;
+
+        a3 = new int[Math.max(a1.length, a2.length)];
+
+        int i;
+        int a;
+        int k;
+        i = a1.length - 1;
+
+        a = a2.length - 1;
+
+        k = 0;
+        int c = 0;
+
+        while (i >= 0 && a >= 0) {
+            int temp = a1[i] + a2[a];
+            if (c > 0) {
+                temp = temp + c;
+            }
+
+            a3[k] = temp % 10;
+
+            if (temp > 9) {
+                c = 1;
+            } else {
+                c = 0;
+            }
+            a = a - 1;
+            i = i - 1;
+            k = k + 1;
+
+        }
+        while (i >= 0) {
+            a3[k] = a1[i];
+            i = i - 1;
+            k = k + 1;
+        }
+
+        while (a >= 0) {
+
+            a3[k] = a2[a];
+            a = a - 1;
+            k = k + 1;
+        }
+        for(int x = 0; x < a3.length / 2; x++)
+        {
+            int temp = a3[x];
+            a3[x] = a3[a3.length - x - 1];
+            a3[a3.length - x - 1] = temp;
+        }
+
+        return a3;
+
+    }
+
+    public static void main(String[] args) {
+        int a1[] = { 1, 9 };
+        int a2[] = { 8,2 , 3};
+        int a3[];
+        a3 = numberarrays(a1, a2);
+  
+        for (int i = 0; i < a3.length; i++) {
+
+         out.printf("%s" , a3[i]);
+        } 
+
+    }
+
+}
+    
+//    public static int[] addNumberArrays(int[] a1, int[] a2) {
+//        int maxLength;
+//        if (a1.length > a2.length) maxLength = a1.length;
+//        else maxLength = a2.length;
+//        
+//        int[] result = new int[maxLength + 1];
+//        
+//        int i = a1.length - 1; 
+//        int j = a2.length - 1; 
+//        int k = result.length - 1; 
+//        int carry = 0; 
+//        
+//        while (i >= 0 && j >= 0) {
+//            int sum = a1[i] + a2[j] + carry;
+//            result[k] = sum % 10;
+//            carry = sum / 10;
+//            i--;
+//            j--;
+//            k--;
+//        }
+//        
+//        while (i >= 0) {
+//            int sum = a1[i] + carry;
+//            result[k] = sum % 10;
+//            carry = sum / 10;
+//            i--;
+//            k--;
+//        }
+//
+//        while (j >= 0) {
+//            int sum = a2[j] + carry;
+//            result[k] = sum % 10;
+//            carry = sum / 10;
+//            j--;
+//            k--;
+//        }
+//
+//        result[0] = carry;
+//    
+//        return result;
+//    }
+//
+//  
+//    
+//    public static void main(String[] args) {
+//        int test1 = 19;
+//        int test2 = 823;
+//        int[] num1 = integerToNumberArray(test1);
+//        int[] num2 = integerToNumberArray(test2);
+//        int[] result = addNumberArrays(num1, num2);
+//        
+//        for (int i : result) System.out.print(i);         
+//        System.out.println();        
+//    }
+//}
